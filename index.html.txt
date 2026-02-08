@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ma Valentine 💘</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+  background: url('photo.jpg') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  background: rgba(255,255,255,0.9);
+  padding: 30px 20px;
+  border-radius: 25px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 1.2s ease;
+}
+
+h1 {
+  color: #e91e63;
+  font-size: 24px;
+  margin-bottom: 25px;
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  margin: 10px 0;
+  cursor: pointer;
+  background: #e91e63;
+  color: white;
+  transition: transform 0.3s;
+}
+
+button:active {
+  transform: scale(1.1);
+}
+
+.message {
+  margin-top: 25px;
+  font-size: 20px;
+  color: #e91e63;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.6s ease;
+}
+
+.message.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Coeurs */
+.heart {
+  position: absolute;
+  font-size: 22px;
+  animation: float 4s linear forwards;
+  pointer-events: none;
+}
+
+/* Feu d’artifice */
+.spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: pink;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-10vh);
+    opacity: 0;
+  }
+}
+
+@keyframes explode {
+  to {
+    transform: translate(var(--x), var(--y));
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.8);}
+  to {opacity: 1; transform: scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+  <h1>Veux-tu être ma Valentine ? 💖</h1>
+
+  <button onclick="valentine()">OUI</button>
+  <button onclick="valentine()">OUI (tu croyais avoir le choix ? 😏)</button>
+
+  <div id="message" class="message">
+    Rendez-vous le <strong>13 février 2026 à 13h</strong><br>
+    pour ta première surprise 💘
+  </div>
+</div>
+
+<!-- Musiques -->
+<audio id="suspense" autoplay loop>
+  <source src="https://assets.mixkit.co/music/preview/mixkit-dark-suspense-113.mp3">
+</audio>
+
+<audio id="love">
+  <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-moment-1197.mp3">
+</audio>
+
+<script>
+function valentine() {
+  document.getElementById("message").classList.add("show");
+
+  document.getElementById("suspense").pause();
+  document.getElementById("love").play();
+
+  heartsExplosion();
+  fireworks();
+}
+
+function heartsExplosion() {
+  for (let i = 0; i < 40; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+  }
+}
+
+function fireworks() {
+  const x = window.innerWidth / 2;
+  const y = window.innerHeight / 2;
+
+  for (let i = 0; i < 30; i++) {
+    const spark = document.createElement("div");
+    spark.className = "spark";
+    spark.style.left = x + "px";
+    spark.style.top = y + "px";
+    spark.style.setProperty("--x", (Math.random()*300-150)+"px");
+    spark.style.setProperty("--y", (Math.random()*300-150)+"px");
+    document.body.appendChild(spark);
+
+    setTimeout(() => spark.remove(), 1000);
+  }
+}
+</script>
+
+</body>
+</html
